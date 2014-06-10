@@ -1,0 +1,61 @@
+<?php
+/*
+*Created by juno
+*/
+?>
+<div class="dashboard-hatton hatton">
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php $_orders = $this->getOrders(); ?>
+    <h1><?php echo $this->__('My Orders') ?></h1>
+
+    <div class="hatton-form">
+        <div class="margin1">
+            <h2 class="margin-bottom2"><?php echo $this->__('Recent Orders') ?></h2>
+            <?php //echo $this->getPagerHtml(); ?>
+            <?php if ($_orders->getSize()): ?>
+                <table class="data-table" id="my-orders-table">
+                    <col width="1"/>
+                    <col width="1"/>
+                    <col/>
+                    <col width="1"/>
+                    <col width="1"/>
+                    <col width="1"/>
+                    <thead>
+                    <tr>
+                        <th><?php echo $this->__('Order #') ?></th>
+                        <th><?php echo $this->__('Date') ?></th>
+                        <th><?php echo $this->__('Ship To') ?></th>
+                        <th class="padding1 a-center"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
+                        <th class="padding1 a-center"><span class="nobr"><?php echo $this->__('Order Status') ?></span></th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $_odd = ''; ?>
+                    <?php foreach ($_orders as $_order): ?>
+                        <tr>
+                            <td><?php echo $_order->getRealOrderId() ?></td>
+                            <td><span
+                                    class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span>
+                            </td>
+                            <td><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+                            <td class="padding1 a-center"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                            <td class="padding1 a-center"><?php echo $_order->getStatusLabel() ?></td>
+                            <td class="a-center">
+                <span class="nobr"><a
+                        href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
+                    <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>
+                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <script type="text/javascript">decorateTable('my-orders-table');</script>
+                <?php //echo $this->getPagerHtml(); ?>
+            <?php else: ?>
+                <p style="font-size: 14px; padding-top: 20px; text-transform: none;"><?php echo $this->__('You do not have any order placed.'); ?></p>
+            <?php endif ?>
+        </div>
+    </div>
+</div>

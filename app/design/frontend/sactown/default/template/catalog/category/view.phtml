@@ -1,0 +1,65 @@
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php
+$_helper    = $this->helper('catalog/output');
+$_category  = $this->getCurrentCategory();
+$_landing = $this->helper('landingpages');
+$_imgHtml   = '';
+if ($_imgUrl = $_category->getImageUrl()) {
+    $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($_category->getName()).'" /></p>';
+    $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+}
+/**
+ * Check if the landing page data exists, if it does show that, else show the category data.
+ */
+if($_landingData = $_landing->getLandingData()):
+?>
+    <div class="page-title category-title">
+        <h1><?php echo $_landingData['title'] ?></h1>
+    </div>
+
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <?php if($_landingData['image']): ?>
+        <?php echo '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($_category->getName()).'" /></p>'; ?>
+    <?php endif; ?>
+
+    <?php if($_landingData['description']): ?>
+        <div class="category-description std">
+            <?php echo $_landingData['description'] ?>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="page-title category-title">
+        <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+    </div>
+
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <?php if($_imgUrl): ?>
+        <?php echo $_imgHtml ?>
+    <?php endif; ?>
+
+    <?php if($_description=$this->getCurrentCategory()->getDescription()): ?>
+        <div class="category-description std">
+            <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+
+<?php if($this->isContentMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+
+<?php else: ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php endif; ?>

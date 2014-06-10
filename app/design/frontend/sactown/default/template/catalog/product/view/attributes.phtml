@@ -1,0 +1,40 @@
+<?php
+/**
+ * Product additional attributes template
+ *
+ * @see Mage_Catalog_Block_Product_View_Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_landingPage = $this->helper('landingpages');
+    $_product = $this->getProduct()
+?>
+<?php if($_additional = $this->getAdditionalData()): ?>
+    <div class="attribute-container">
+        <table class="data-table" id="product-attribute-specs-table">
+            <col width="25%" />
+            <col />
+            <tbody>
+            <?php foreach ($_additional as $_data): ?>
+		        <?php if(in_array($_data['code'], array('taste','case_types', 'region','color' ,'vineyard','label','style','grapes')) ):?>
+                    <?php if($_helper->productAttribute($_product, $_data['value'], $_data['code'])!="No"  ): ?>
+                        <tr>
+                            <th class="label"><?php echo $this->escapeHtml($this->__($_data['label'])) ?></th>
+                            <td class="data">
+                                <?php if($url = $_landingPage->getLandingPageUrl($_product->getData($_data['code']), $_data['code'])): ?>
+                                    <?php echo '<a href="'.$url.'" title="'.$_helper->productAttribute($_product, $_data['value'], $_data['code']).'">'.$_helper->productAttribute($_product, $_data['value'], $_data['code']).'</a>' ?>
+                                <?php else: ?>
+                                    <?php echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <a href="#" class="view-more">View More</a>
+    <script type="text/javascript">decorateTable('product-attribute-specs-table')</script>
+<?php endif;?>

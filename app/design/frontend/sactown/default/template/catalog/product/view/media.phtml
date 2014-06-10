@@ -1,0 +1,114 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if (count($this->getGalleryImages()) > 1):?>
+<ul class="bxslider">
+    <?php foreach ($this->getGalleryImages() as $_image):?>
+    <li><img class="mainimage" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize(280,570); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" /></li>
+    <?php endforeach;?>    
+</ul>    
+<div class="controlmedia more-views">
+<h2><?php echo $this->__('More Views') ?></h2>
+
+    <div id="bx-pager">
+    <ul>
+        <?php $i= 0; foreach ($this->getGalleryImages() as $_image): ?>
+       <li> <a data-slide-index="<?php echo $i;?>" ref="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>" href=""><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" /></a></li>
+        <?php $i++; endforeach; ?>
+        </ul>
+    </div>   
+    <a href="#" class="no-text icon-zoom"><?php echo $this->__('Zoom')?></a> 
+</div>
+
+<?php else: ?>
+<p class="product-image">
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(280,570).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" class="mainimage" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+    
+</p>
+<div class="controlmedia more-views">
+ <div id="bx-pager" style="display:none;">
+    <ul>
+        <?php $i= 0; foreach ($this->getGalleryImages() as $_image): ?>
+       <li> <a data-slide-index="<?php echo $i;?>" ref="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>" href=""><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" /></a></li>
+        <?php $i++; endforeach; ?>
+        </ul>
+    </div>  
+<a href="#" class="no-text icon-zoom"><?php echo $this->__('Zoom')?></a> </div>
+<?php endif; ?>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('.bxslider').bxSlider({
+        mode: 'fade',
+        controls: false,
+        pagerCustom: '#bx-pager'
+    });
+
+    var imgActiveLink = jQuery('#bx-pager a:first').attr('ref');
+    jQuery('.controlmedia .icon-zoom').attr('href', imgActiveLink);
+
+    jQuery('#bx-pager a').click(function(){
+	jQuery('div.product-img-box').find('.bxslider li#lastli').fadeOut('slow').remove();
+        var imgLink = jQuery(this).attr('ref');
+        jQuery('.controlmedia .icon-zoom').attr('href', imgLink);
+		
+    });  
+	
+    jQuery('#bx-pager a:first').click(function(){	
+        var imgLink = jQuery(this).attr('ref');
+		jQuery('div.product-img-box').find('.bxslider li:first').fadeIn('slow');
+        jQuery('.controlmedia .icon-zoom').attr('href', imgLink);
+    });
+	jQuery('#bx-pager a:last').click(function(){	
+        var imgLink = jQuery(this).attr('ref');
+		jQuery('div.product-img-box').find('.bxslider li:last').fadeIn('slow');
+        jQuery('.controlmedia .icon-zoom').attr('href', imgLink);
+    }); 
+	jQuery('ul.coloroption  li  a').click(function(){
+       var imgLink = jQuery(this).attr('ref');	 
+	   jQuery('.controlmedia .icon-zoom').attr('href', imgLink);
+	   jQuery('div.product-img-box').find('.bxslider li').hide();
+	   var wdth =jQuery('div.product-img-box').find('.bxslider li:first').css('width');
+	   jQuery('div.product-img-box').find('.bxslider li#lastli').fadeOut('slow').remove();
+	   jQuery('div.product-img-box').find('.bxslider li:last').after('<li id="lastli" style="float: none; list-style: none outside none; position: absolute;width: '+wdth+'; z-index: 50; display: none;"><img class="mainimage" src="'+imgLink+'" alt="">');
+	   jQuery('div.product-img-box').find('.bxslider li:last').fadeIn('slow');
+    });
+	 
+    jQuery('.controlmedia .icon-zoom').magnificPopup({type:'image'});
+});
+</script>

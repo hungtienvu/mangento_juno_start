@@ -1,0 +1,74 @@
+<?php
+    $_productCollection = Mage::getModel('catalog/product')
+        ->getCollection()
+        ->addAttributeToSelect('*')
+        ->addAttributeToFilter('status',1)
+        ->addAttributeToFilter('visibility',4) // catalog/search
+        ->addAttributeToSort('created_at', 'ASC')
+        ->setPageSize(3)
+        ->setCurPage(1);
+        $_products = $_productCollection;
+?>
+
+
+<div class="left-home">
+	<div id="banner-2" class="flexslider">
+        <ul class="slides">
+          <?php $banner_model = new Juno_Banners_Model_Image(); ?>
+		  <?php $banners = Mage::getResourceModel('banners/image_collection')->addImageCodeFilter('home-left-banner')-> setOrderByPosition(); ?>
+          <?php $flag = true; ?>
+          <?php foreach($banners as $banner): ?>
+            <?php $count = 0; ?>
+            <?php if($count < count($banner)):?>
+                <?php $banner = $banner_model->load($banner['image_id']); ?>
+                <?php if( $banner->getStatus() == 1 ): ?>
+                    <?php $url = $banner->getUrl(); ?>
+                    <li>
+                        <?php if($url): $flag = false;?>
+                                <a href="<?php echo $url; ?>"><img src="<?php echo $banner->getImageUrl();?>" alt="<?php echo $banner['title'];?>"/></a>
+                        <?php else: $flag = false;?>
+                                <img src="<?php echo $banner->getImageUrl();?>" alt="<?php echo $banner['title'];?>"/>
+                        <?php endif;?>
+                    </li>
+                <?php endif; ?>
+            <?php endif;?>
+            <?php $count++; ?>
+          <?php endforeach; ?>
+          <?php if($flag): ?>
+                  <li><img src="<?php echo $this->getSkinUrl('images/banner-2.jpg') ?>" alt=""/></li>
+          <?php endif; ?>
+        </ul>
+    </div>
+
+    <?php if($_products->count()>1):?>
+    <div class="new-arrivals">
+        <h2 class="block-title"><span class="icon-left"></span><span class="text"><?php echo $this->__('New Arrivals') ?></span><span class="icon-right"></span></h2>
+        <ul class="product-list-block">
+            <?php $i=1; ?>
+            <?php foreach($_products as $_product): ?>
+                <li <?php if($i%3==0){echo ' class="last"';} ?>>
+                    <div class="inner">
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName(); ?>"  class="image">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(97,235); ?>" alt="<?php echo $_product->getName(); ?>" />
+                            <p class="name"><?php echo $_product->getName(); ?></p>
+                            <p class="price"><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></p>
+                        </a>
+                    </div>
+
+                </li>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        jQuery('#banner-2').flexslider({
+            slideshow: true,
+            directionNav:false,
+            move:1
+        });
+    });
+</script>

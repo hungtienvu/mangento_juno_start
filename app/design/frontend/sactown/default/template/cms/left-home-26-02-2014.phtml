@@ -1,0 +1,54 @@
+<?php
+    $_productCollection = Mage::getModel('catalog/product')
+        ->getCollection()
+        ->addAttributeToSelect('*')
+        ->addAttributeToFilter('status',1)
+        ->addAttributeToFilter('visibility',4) // catalog/search
+        ->addAttributeToSort('created_at', 'desc')
+        ->setPageSize(3)
+        ->setCurPage(1);
+        $_products = $_productCollection;
+?>
+
+
+<div class="left-home">
+    <div id="banner-2" class="flexslider">
+        <ul class="slides">
+            <li><img src="<?php echo $this->getSkinUrl('images/banner-2.jpg') ?>" alt=""/></li>
+            <li><img src="<?php echo $this->getSkinUrl('images/banner-2.jpg') ?>" alt=""/></li>
+            <li><img src="<?php echo $this->getSkinUrl('images/banner-2.jpg') ?>" alt=""/></li>
+            <li><img src="<?php echo $this->getSkinUrl('images/banner-2.jpg') ?>" alt=""/></li>
+        </ul>
+    </div>
+    <?php if($_products->count()>1):?>
+    <div class="new-arrivals">
+        <h2 class="block-title"><span class="icon-left"></span><span class="text"><?php echo $this->__('New Arrivals') ?></span><span class="icon-right"></span></h2>
+        <ul class="product-list-block">
+            <?php $i=1; ?>
+            <?php foreach($_products as $_product): ?>
+                <li <?php if($i%3==0){echo ' class="last"';} ?>>
+                    <div class="inner">
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName(); ?>"  class="image">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(97,235); ?>" alt="<?php echo $_product->getName(); ?>" />
+                            <p class="name"><?php echo $_product->getName(); ?></p>
+                            <p class="price"><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></p>
+                        </a>
+                    </div>
+
+                </li>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        jQuery('#banner-2').flexslider({
+            slideshow: false,
+            directionNav:false,
+            move:1
+        });
+    });
+</script>

@@ -1,0 +1,14 @@
+<?php
+/*
+*Created by juno
+*/
+?>
+<div class="hatton-wrapper1 account-logout">
+    <h1><?php echo $this->__('You’ve succesfully logged out.')?></h1>
+    <a href="<?php echo $this->getUrl('')?>" class="hatton-button"><?php echo $this->__('go to home page')?></a>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    setTimeout(function(){ location.href = '<?php echo $this->getUrl() ?>'},10000);
+//]]>
+</script>

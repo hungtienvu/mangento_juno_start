@@ -1,0 +1,66 @@
+<?php
+  $_sommelier = $this->helper('sommelier');
+?>
+<form id="sommelier_service">
+    <div id="find-bar">
+        <div class="inner">
+            <label><?php echo $this->__('Sommelier Service') ?></label>
+            <ul>
+                <?php $filters = array('colour','region','taste'); foreach($filters as $filter_name): ?>
+                <li>
+                    <select name="<?php echo $filter_name ?>" id="<?php echo $filter_name ?>" onchange="updateOptions();">
+                        <option value=""><?php echo ucwords($filter_name) ?></option>
+                        <?php foreach($_sommelier->getFilter($filter_name) as $filter): ?>
+                            <?php echo '<option value="'.$filter['value'].'">'.$filter['label'].'</option>'; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </li>
+                <?php endforeach; ?>
+                <li>
+                    <select name="price" id="price">
+                        <option value=""><?php echo $this->__('Price') ?></option>
+                        <option value="0-100" <?php if('0-100' == $_params['price']) {?> selected="selected" <?php }?>>0-&pound;100</option>
+                        <option value="101-500"  <?php if('101-500' == $_params['price']) {?> selected="selected" <?php }?>>&pound;101-&pound;500</option>
+                        <option value="501-1000"  <?php if('501-1000' == $_params['price']) {?> selected="selected" <?php }?>>&pound;501-&pound;1000</option>
+                        <option value="1001-99999"  <?php if('1001-' == $_params['price']) {?> selected="selected" <?php }?>>&pound;1001 & above</option>
+                    </select>
+                </li>
+            </ul>
+            <button class="button" type="button" onclick="submitfind()"> <span><span>Find</span></span></button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+
+    function updateOptions()
+    {
+        jQuery.getJSON('/sommelier/index/ajax/', jQuery('#sommelier_service').serialize(), function(data){
+
+            jQuery.each( data, function( key, value ) {
+                //alert( key + ": " + value );
+                var options = '';
+                jQuery.each( value, function( optionKey, optionValue ) {
+                    //alert( key + " - " + optionValue['value'] + ": " + optionValue['label'] +"("+optionValue['count']+")" );
+                    if ( typeof optionValue['selected'] !== "undefined" && optionValue['selected']) {
+                        options += '<option value="' + optionValue['value'] + '" selected="selected">' + optionValue['label'] + '</option>';
+                    } else {
+                        options += '<option value="' + optionValue['value'] + '">' + optionValue['label'] + '</option>';
+                    }
+                });
+                jQuery("select#"+key).html(options);
+                var selectBox = jQuery("select#"+key).data("selectBox-selectBoxIt");
+                selectBox.refresh();
+            });
+        });
+
+    }
+
+    jQuery(document).ready(function(){
+        // -- Auto Width
+        jQuery("#find-bar select").selectBoxIt({
+            autoWidth:false,
+            showEffect: "fadeIn"
+        });
+    });
+
+</script>

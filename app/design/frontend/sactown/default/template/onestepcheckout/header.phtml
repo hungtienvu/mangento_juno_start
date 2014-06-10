@@ -1,0 +1,45 @@
+<?php
+
+/*
+*Created by juno
+*/
+
+?>
+<div id="header">
+        <div class="right-header">
+            <div class="top-links">
+                <ul>
+                	<?php /*?><li class="sell-your-wine"><a href="#">Sell Your Wine</a></li><?php */?>
+                    <li class="call"><?php echo Mage::getStoreConfig('general/store_information/phone') ?></li>
+                    <li class="login">
+                        <?php if(!$this->helper('customer')->isLoggedIn()):?>
+                            <a href="<?php echo $this->getUrl('customer/account/login') ;?>"><?php echo $this->__('Login');?></a><span> / </span><a href="<?php echo $this->getUrl('customer/account/create') ;?>"><?php echo $this->__('Register');?></a>
+                        <?php else: ?>
+                            <a href="<?php echo $this->getUrl('customer/account/logout') ;?>"><?php echo $this->__('Logout');?></a><span> / </span><a href="<?php echo $this->getUrl('customer/account') ;?>"><?php echo $this->__('My Account');?></a>
+                        <?php endif; ?>
+                    </li>
+                    <li class="basket"><a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('My Bag (').Mage::getSingleton('checkout/session')->getQuote()->getItemsSummaryQty(); ?>)</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="middle-header">
+            <?php if ($this->getIsHomePage()):?>
+                <h1 class="logo">
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>">
+                        <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+                </h1>
+            <?php else:?>
+                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+                    <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+                </a>
+            <?php endif?>
+        </div>
+	<div class="continue-shopping-bar">
+		<a href="<?php echo $this->getUrl() ?>"><?php echo $this->__('Continue Shopping') ?></a>
+	</div>
+</div>
+
+
+
+

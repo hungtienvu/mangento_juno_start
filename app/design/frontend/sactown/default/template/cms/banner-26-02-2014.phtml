@@ -1,0 +1,18 @@
+<div id="banner" class="flexslider">
+    <div class="inner">
+        <ul class="slides">
+            <li><img src="<?php echo $this->getSkinUrl('images/banner.jpg') ?>" alt=""/></li>
+            <li><img src="<?php echo $this->getSkinUrl('images/banner.jpg') ?>" alt=""/></li>
+        </ul>
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function($) {
+        jQuery('#banner').flexslider({
+        	animation:"slide",
+            slideshow: false,
+            directionNav:false,
+            move:1
+        });
+    });
+</script>

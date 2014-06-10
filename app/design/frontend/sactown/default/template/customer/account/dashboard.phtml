@@ -1,0 +1,22 @@
+<?php
+/*
+*Created by juno
+*/
+?>
+<div class="dashboard-hatton">
+    <div class="dashboard hatton">
+        <h1><?php echo $this->__('My Account') ?></h1>
+        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+        <?php //echo $this->getChildHtml('top') ?>
+        <div class="hatton-form">
+            <div class="margin1">
+                <?php /* Extensions placeholder */ ?>
+                <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
+                <?php echo $this->getChildHtml('info') ?>
+                <?php echo $this->getChildHtml('address') ?>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('info1') ?>
+        <?php echo $this->getChildHtml('info2') ?>
+    </div>
+</div>

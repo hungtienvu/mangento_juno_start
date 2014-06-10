@@ -1,0 +1,17 @@
+<div id="footer">
+	<div class="left">
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('left-footer-links')->toHtml(); ?>
+    </div>
+	<div class="right">
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('right-footer-links')->toHtml(); ?>
+    </div>
+    <div class="copyright">
+    	<div class="logo-footer">
+    		<img src="<?php echo $this->getSkinUrl('images/text-drinkaware.png') ?>" />
+    	</div>
+   		<p><?php echo $this->getCopyright() ?></p>
+   		<div class="image-truck">
+   			<img src="<?php echo $this->getSkinUrl('images/text-epay.png') ?>" />
+   		</div>
+    </div>
+</div>

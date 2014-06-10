@@ -1,0 +1,42 @@
+<div id="banner" class="flexslider">
+  <div class="inner">
+    <ul class="slides">
+      <?php $banner_model = new Juno_Banners_Model_Image(); ?>
+      <?php $banners = Mage::getResourceModel('banners/image_collection')->addImageCodeFilter('home-top-banner')-> setOrderByPosition(); ?>
+      <?php $flag = true; ?>
+      <?php foreach($banners as $banner): ?>
+      	<?php $count = 0; ?>
+      	<?php if($count < count($banner)):?>
+      		<?php $banner = $banner_model->load($banner['image_id']); ?>
+      		<?php if( $banner->getStatus() == 1 ): ?>
+      			<?php $url = $banner->getUrl(); ?>
+      			<li>
+        			<?php if($url): $flag = false;?>
+        					<a href="<?php echo $url; ?>"><img src="<?php echo $banner->getImageUrl();?>" alt="<?php echo $banner['title'];?>"/></a>
+        			<?php else: $flag = false;?>
+        					<img src="<?php echo $banner->getImageUrl();?>" alt="<?php echo $banner['title'];?>"/>
+        			<?php endif;?>
+      			</li>
+      		<?php endif; ?>
+       	<?php endif;?>
+      	<?php $count++; ?>
+      <?php endforeach; ?>
+      <?php if($flag): ?>
+              <li><img src="<?php echo $this->getSkinUrl('images/banner.jpg') ?>" alt=""/></li>
+      <?php endif; ?>
+    </ul>
+  </div>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        jQuery('#banner').flexslider({
+        	animation:"slide",
+            slideshow: true,
+            directionNav:false,
+            animation:"fade",
+            animationSpeed: 1000,
+            move:1
+        });
+    });
+</script>

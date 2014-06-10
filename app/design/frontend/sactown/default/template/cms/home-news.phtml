@@ -1,0 +1,29 @@
+<div class="home-news">
+ 
+    <div class="left">
+        <span class="sprites"></span>
+        <h2 class="block-title"><?php echo $this->__('The latest at Hatton &amp; Edwards') ?></h2>
+        <ul class="wp-item">
+        
+           <?php $latestathattonedwards = Mage::getModel('banners/image')->getCollection();?>
+			 <?php $latestathattonedwards->addFieldToFilter('code', 'latestathatton_edwards');?>
+			 <?php $latestathattonedwards->addFieldToFilter('status', 1);	?>
+			<?php  $latestathattonedwards->setOrderByPosition(); ?>	
+			<?php  $i=1;	 ?>
+			 <?php foreach($latestathattonedwards as $middleleftbanner): ?>          
+			<li <?php if($i==2):?> class="last" <?php endif;?> >
+				<a href="<?php echo $middleleftbanner->getUrl();?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "jbanners/" . $middleleftbanner->getImageFilename() ?>" alt="<?php echo $middleleftbanner->getData('title');?>" /></a>
+                 <a href="<?php echo $middleleftbanner->getUrl();?>" class="title"><?php echo $middleleftbanner->getTitle();?></a>
+                 <p><?php echo $middleleftbanner->getDescription();?></p>
+			</li>			
+            <?php $i++;endforeach;?>         
+        </ul>
+    </div>
+    <div class="right">
+        <div id="twitter">
+            <span class="sprites"></span>
+			<?php echo $this->getChildHtml('home.latesttweet') ?>
+        </div>
+        <?php echo $this->getChildHtml('newsletter') ?>
+    </div>
+</div>

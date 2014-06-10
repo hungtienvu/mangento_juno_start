@@ -1,0 +1,24 @@
+<?php echo $this->getChildHtml('banner'); ?>
+<?php echo $this->getChildHtml('left-home'); ?>
+<?php echo $this->getChildHtml('right-home'); ?>
+<?php echo $this->getChildHtml('home-news'); ?>
+<script type="text/javascript">
+			jQuery(window).bind("load", function() {
+				jQuery('.product-list-block').each(function() {									
+					var maxHeight = 0;
+					jQuery(this).find('.name').each(function() {
+						if (maxHeight < jQuery(this).height()) {
+							maxHeight = jQuery(this).height();
+						}
+					});
+					jQuery(this).find('.name').css('height', maxHeight);
+					var maxHeight = 0;
+					jQuery(this).find('li').each(function() {
+						if (maxHeight < jQuery(this).height()) {
+							maxHeight = jQuery(this).height();
+						}
+					});
+					jQuery(this).find('li').css('height', maxHeight);
+				});
+			});			
+</script>

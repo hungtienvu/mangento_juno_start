@@ -1,0 +1,51 @@
+<?php
+$_productCollection = Mage::getModel('catalog/product')
+    ->getCollection()
+    ->addAttributeToSelect('*')
+    ->addAttributeToFilter('status',1)
+    ->addAttributeToFilter('is_highlight',1)
+    ->addAttributeToFilter('visibility',4) // catalog/search
+    ->addAttributeToSort('created_at', 'desc')
+    ->setPageSize(10)
+    ->setCurPage(1);
+$_products = $_productCollection;
+?>
+<div class="right-home">
+    <?php if($_products->count()>1):?>
+    <div class="our-highlights">
+        <h2 class="block-title"><span class="icon-left">U</span><span class="text"><?php echo $this->__('Our Highlights') ?></span><span class="icon-right">V</span></h2>
+        <div class="slider-wrapper-hidden flexslider">
+        <ul class="product-list-block slides">
+            <?php foreach($_products as $_product): ?>
+                <li>
+                    <div class="inner">
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName(); ?>"  class="image">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(97,235); ?>" alt="<?php echo $_product->getName(); ?>" />
+                            <p class="name"><?php echo $_product->getName(); ?></p>
+                            <p class="price"><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></p>
+                        </a>
+                    </div>
+
+                </li>           
+            <?php endforeach; ?>
+        </ul>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('ad-1')->toHtml() ?>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        jQuery('.slider-wrapper-hidden').flexslider({
+            slideshow: false,
+            animation: "slide",
+            itemWidth:189,
+            move:1,
+            controlNav:false
+        });
+    });
+</script>
+
+
+

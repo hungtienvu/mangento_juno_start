@@ -1,0 +1,31 @@
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_product = $this->getProduct()
+?> 
+
+<?php if($_additional = $this->getAdditionalData()): ?>
+<h2><?php echo $this->__('Product Details') ?><span>&nbsp;</span></h2>
+    <div class="std prod_taste">
+	
+        <?php foreach ($_additional as $_data): 	
+		if(!in_array($_data['code'], array('taste','case_types', 'region','color' ,'vineyard','label','style','grapes')) ):?>
+        
+        <?php if($_helper->productAttribute($_product, $_data['value'], $_data['code'])!="No"  ): ?>
+        
+        <ul>   
+        <li><?php echo $this->escapeHtml($this->__($_data['label'])) ?></li>
+        <li class="type"><?php echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></li>  
+         <?php endif; ?>                 
+        </ul><?php endif;  endforeach; ?>		
+        </div>
+    
+    <script language="javascript">
+    jQuery(document).ready(function(){
+	jQuery("div.left h2").click(function(){
+	jQuery(this).next("div").slideToggle("fast");
+	jQuery(this).find('span').toggleClass('active');
+	});
+		
+	});
+    </script>
+<?php endif; ?>

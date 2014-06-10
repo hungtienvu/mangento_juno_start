@@ -1,0 +1,27 @@
+@media all and (max-width : 780px) {
+	img {max-width: 100%;}
+	.wrapper{min-width: 300px;}
+	.contents {width: 90%;}
+	
+}
+
+@media all and (max-width: 990px) {
+}
+
+@media all and (max-width:800px) {
+}
+
+@media all and (max-width:680px) {
+}
+
+@media all and (max-width: 650px) {
+}
+
+@media all and (max-width: 520px) {
+}
+
+@media all and (max-width: 400px) {
+}
+
+@media all and (max-width:350px) {
+}

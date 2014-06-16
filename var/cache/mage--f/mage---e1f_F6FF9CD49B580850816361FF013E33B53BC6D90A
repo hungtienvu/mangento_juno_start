@@ -1,0 +1,15 @@
+<div id="footer">
+	<div class="left">
+            </div>
+	<div class="right">
+            </div>
+    <div class="copyright">
+    	<div class="logo-footer">
+    		<img src="http://localhost/juno/magento_community/skin/frontend/base/default/images/text-drinkaware.png" />
+    	</div>
+   		<p>&copy; 2013 Magento Demo Store. All Rights Reserved.</p>
+   		<div class="image-truck">
+   			<img src="http://localhost/juno/magento_community/skin/frontend/base/default/images/text-epay.png" />
+   		</div>
+    </div>
+</div>

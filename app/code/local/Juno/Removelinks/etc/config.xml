@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Juno_Removelinks>
+            <version>0.1.0</version>
+        </Juno_Removelinks>
+    </modules>
+    <global>
+        <blocks>
+            <customer>
+                <rewrite>
+                    <account_navigation>Juno_Removelinks_Block_Account_Navigation</account_navigation>
+                </rewrite>
+            </customer>
+        </blocks>
+    </global>
+</config>
